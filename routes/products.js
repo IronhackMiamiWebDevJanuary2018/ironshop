@@ -42,5 +42,16 @@ router.post('/', (req, res, next) => {
     });
 }); 
 
+// Show Individual Product Details
+// "/products/:id"
+router.get('/:id', (req, res, next) => {
+    const productId = req.params.id;
+
+    Product.findById(productId, (err, product) => {
+        if (err) { return next(err); }
+        res.render('products/show', { product: product });
+    });
+});
+
 module.exports = router;
 
