@@ -53,5 +53,43 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
+// Show Form to Update Product
+router.get('/:id/edit', (req, res, next) => {
+    const productId = req.params.id;
+
+    Product.findById(productId, (err, product) => {
+        if (err) { return next(err); }
+        res.render('products/edit', { product: product });
+    });
+});
+
+// Update Product Information in Database
+router.post('/:id', (req, res, next) => {
+    const productId = req.params.id;
+
+    const updates = {
+        name: req.body.name,
+        price: req.body.price,
+        imageUrl: req.body.imageUrl,
+        description: req.body.description
+    }
+
+    Product.findByIdAndUpdate(productId, updates, (err, product) => {
+        if (err) { return next(err); }
+        return res.redirect('/products');
+    });
+});
+
+// Delete Product from Database
+router.post('/:id/delete', (req, res, next) => {
+    const productId = req.params.id;
+
+    Product.findByIdAndRemove(productId, (err, product) => {
+        if (err) { return next(err); } 
+
+        return res.redirect('/products');
+    });
+});
+
 module.exports = router;
 
