@@ -2,6 +2,9 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/product-example-development-2', {useMongoClient: true});
 
+// Mount the Routes in Our Main Express App
+const reviewRoutes = require('./routes/product-reviews');
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -30,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/products', productRoutes);
+app.use('/', reviewRoutes);
 // app.use('/users', users);
 
 // catch 404 and forward to error handler
